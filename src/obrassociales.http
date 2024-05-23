@@ -1,0 +1,21 @@
+### obtener todas las obras sociales
+GET http://localhost:3000/api/obrassociales
+
+### obtener UNA obra sociale
+GET http://localhost:3000/api/obrassociales/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+
+### crear una nueva obra social
+POST http://localhost:3000/api/obrassociales
+Content-Type: application/json
+
+{
+  "name": "Federada"
+}
+
+### modificar una obra social
+PUT http://localhost:3000/api/obrassociales/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+  "name": "ospacp"
+}
