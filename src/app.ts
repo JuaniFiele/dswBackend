@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import { HealthInsurance } from './HealthInsurance/healthinsurance.entity.js'
 import { medicRouter } from './Medic/medic.routers.js'
 import { ClinicHistory } from './ClinicHistory/clinichistory.entity.js'
+import { clinicHistoryRouter } from './ClinicHistory/clinichistory.routers.js'
 const app = express()
 
 app.use(express.json())
@@ -104,23 +105,20 @@ app.delete('/api/HealthInsurances/:code', (req, res) => {
 //rutas de medicos
 
 app.use('/api/Medics', medicRouter)
+app.use('/api/ClinicHistorys', clinicHistoryRouter)
 
 app.use((_, res) => {
     return res.status(404).send({ message: 'Resource not found' })
   })
-  
 
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000/")
-})
 
 
 const ClinicHistorys = [
     new ClinicHistory(
         1
-        , "A+"
-        , "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: No fumador, Consumo de alcohol moderado (1-2 copas de vino por semana), Ejercicio físico regular (3 veces por semana). Medicación Actual: Losartán 50 mg una vez al día."
-        , "Padre: Edad: 70 años. Enfermedades: Hipertensión arterial, infarto al miocardio a los 68 años. Madre: Edad: 68 años. Enfermedades: Diabetes tipo 2 diagnosticada a los 60 años, hipotiroidismo. Hermano Mayor: Edad: 48 años. Enfermedades: Ninguna conocida. Hermana Menor: Edad: 42 años. Enfermedades: Asma desde la infancia. Abuelos Paternos: Abuelo: Fallecido a los 75 años por complicaciones de un derrame cerebral, tenía hipertensión. Abuela: Fallecida a los 72 años por cáncer de mama. Abuelos Maternos: Abuelo: Fallecido a los 80 años por causas naturales, tenía diabetes tipo 2. Abuela: Fallecida a los 78 años por enfermedad pulmonar obstructiva crónica (EPOC)."
+        , 'A+'
+        , 'Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: No fumador, Consumo de alcohol moderado (1-2 copas de vino por semana), Ejercicio físico regular (3 veces por semana). Medicación Actual: Losartán 50 mg una vez al día.'
+        , 'Padre: Edad: 70 años. Enfermedades: Hipertensión arterial, infarto al miocardio a los 68 años. Madre: Edad: 68 años. Enfermedades: Diabetes tipo 2 diagnosticada a los 60 años, hipotiroidismo. Hermano Mayor: Edad: 48 años. Enfermedades: Ninguna conocida. Hermana Menor: Edad: 42 años. Enfermedades: Asma desde la infancia. Abuelos Paternos: Abuelo: Fallecido a los 75 años por complicaciones de un derrame cerebral, tenía hipertensión. Abuela: Fallecida a los 72 años por cáncer de mama. Abuelos Maternos: Abuelo: Fallecido a los 80 años por causas naturales, tenía diabetes tipo 2. Abuela: Fallecida a los 78 años por enfermedad pulmonar obstructiva crónica (EPOC).'
     ),
 ]
 
@@ -139,11 +137,10 @@ function sanitizeClinicHistoryInput(req: Request, res: Response, next: NextFunct
       })
     next()
 }
-
+  
 app.get('/api/ClinicHistorys', (req, res) => {
     res.json(ClinicHistorys)
 })
-
 
 app.get('/api/ClinicHistorys/:nro', (req, res) => {
     const aClinicHistory = ClinicHistorys.find( (ClinicHistory) => ClinicHistory.nro === Number(req.params.nro) )
@@ -201,4 +198,14 @@ app.delete('/api/ClinicHistorys/:nro', (req, res) => {
         ClinicHistorys.splice(ClinicHistoryIdx, 1)
         res.status(200).send({message: 'Clinic History deleted succesfully'})
     }
+})
+
+
+app.use((_, res) => {
+    return res.status(404).send({ message: 'Resource not found' })
+  })
+  
+
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000/")
 })

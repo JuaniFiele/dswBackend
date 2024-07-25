@@ -1,12 +1,12 @@
 
 ###OBTENER TODAS LAS HISTORIAS CLINICAS
-GET http://localhost:3000/api/ClinicHistory
+GET http://localhost:3000/api/ClinicHistorys
 
 ###OBTENER UNA HISTORIA CLINICA
-GET http://localhost:3000/api/ClinicHistory/1
+GET http://localhost:3000/api/ClinicHistorys/1
 
 ###CREAR UNA NUEVA HISTORIA CLINICA
-POST http://localhost:3000/api/ClinicHistory
+POST http://localhost:3000/api/ClinicHistorys
 Content-Type: application/json
 
 {
@@ -17,18 +17,18 @@ Content-Type: application/json
 }
 
 ### MODIFICAREMOS UNA HISTORIA CLINICA 
-PUT http://localhost:3000/api/ClinicHistory/1
+PUT http://localhost:3000/api/ClinicHistorys/1
 Content-Type: application/json
 
 {
     "personalHistory": "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: Fumador, No hace ejercicio fisico",
 }
 ### MODIFICAR HISTORIA CLINICA (PATCH - recurso parcial)
-PATCH http://localhost:3000/api/ClinicHistory/1
+PATCH http://localhost:3000/api/ClinicHistorys/1
 Content-Type: application/json
 
 {
     "personalHistory": "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: Fumador, No hace ejercicio fisico",
 }
 ### BORRAR UNA HISTORIA CLINICA
-DELETE http://localhost:3000/api/ClinicHistory/1
+DELETE http://localhost:3000/api/ClinicHistorys/1
