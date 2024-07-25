@@ -7,26 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Entity, Property, PrimaryKey, BaseEntity } from "@mikro-orm/core";
-export let ClinicHistory = class ClinicHistory extends BaseEntity {
-};
+import { PrimaryKey } from "@mikro-orm/core";
+export class BaseEntity {
+}
 __decorate([
-    PrimaryKey({ nullable: false, unique: true }),
+    PrimaryKey(),
     __metadata("design:type", Number)
-], ClinicHistory.prototype, "id", void 0);
-__decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", String)
-], ClinicHistory.prototype, "bloodType", void 0);
-__decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", String)
-], ClinicHistory.prototype, "personalHistory", void 0);
-__decorate([
-    Property({ nullable: false }),
-    __metadata("design:type", String)
-], ClinicHistory.prototype, "familyBackground", void 0);
-ClinicHistory = __decorate([
-    Entity()
-], ClinicHistory);
-//# sourceMappingURL=clinichistory.entity.js.map
+], BaseEntity.prototype, "id", void 0);
+//# sourceMappingURL=baseEntity.entity.js.map

@@ -1,9 +1,10 @@
-import { ClinicHistoryRepository } from './clinichistory.repository.js';
 import { ClinicHistory } from './clinichistory.entity.js';
-const repository = new ClinicHistoryRepository();
+import { orm } from "../shared/db/orm.js";
+const em = orm.em;
+em.getRepository(ClinicHistory);
 function sanitizeClinicHistoryInput(req, res, next) {
     req.body.sanitizedInput = {
-        nro: req.body.nro,
+        id: req.body.id,
         bloodType: req.body.bloodType,
         personalHistory: req.body.personalHistory,
         familyBackground: req.body.familyBackground,
@@ -17,40 +18,56 @@ function sanitizeClinicHistoryInput(req, res, next) {
     });
     next();
 }
-function findAll(req, res) {
-    res.json({ data: repository.findAll() });
-}
-function findOne(req, res) {
-    const aClinicHistory = repository.findOne({ nro: Number(req.params.nro) });
-    if (!aClinicHistory) {
-        return res.status(404).send({ message: 'Clinic History not found' });
+async function findAll(req, res) {
+    try {
+        const ClinicHistorys = await em.find(ClinicHistory, {});
+        res.status(200).json({ message: "Found all Clinic Historys", data: ClinicHistorys });
     }
-    res.json(aClinicHistory);
-}
-function add(req, res) {
-    const input = req.body.sanitizedInput;
-    const aNewClinicHistoryInput = new ClinicHistory(input.nro, input.bloodType, input.personalHistory, input.familyBackground);
-    const aNewClinicHistory = repository.add(aNewClinicHistoryInput);
-    res.status(201).send({ message: 'Clinic History created succesfully', data: aNewClinicHistory });
-}
-function update(req, res) {
-    req.body.sanitizedInput.nro = req.params.nro;
-    const clinicHistory = repository.update(req.body.sanitizedInput);
-    if (!clinicHistory) {
-        res.status(404).send({ message: 'Clinic History not found' });
-    }
-    else {
-        res.status(200).send({ message: 'Clinic History updated succesfully', data: clinicHistory });
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
-function remove(req, res) {
-    const nro = Number(req.params.nro);
-    const clinicHistory = repository.delete({ nro });
-    if (!clinicHistory) {
-        res.status(404).send({ message: 'Clinic History not found' });
+async function findOne(req, res) {
+    try {
+        const id = Number.parseInt(req.params.id);
+        const aClinicHistory = await em.findOneOrFail(ClinicHistory, { id });
+        res.status(200).json({ message: "Clinic History Found", data: aClinicHistory });
     }
-    else {
-        res.status(200).send({ message: 'Clinic History deleted succesfully' });
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+async function add(req, res) {
+    try {
+        const aNewClinicHistory = em.create(ClinicHistory, req.body.sanitizedInput);
+        await em.flush();
+        res.status(201).json({ message: "Clinic History created", data: aNewClinicHistory });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+async function update(req, res) {
+    try {
+        const id = Number.parseInt(req.params.id);
+        const aClinicHistory = em.getReference(ClinicHistory, id);
+        em.assign(aClinicHistory, req.body.sanitizedInput);
+        await em.flush();
+        res.status(200).json({ message: "Clinic History updated", data: aClinicHistory });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+async function remove(req, res) {
+    try {
+        const id = Number.parseInt(req.params.id);
+        const aClinicHistory = em.getReference(ClinicHistory, id);
+        await em.removeAndFlush(aClinicHistory);
+        res.status(200).json({ message: "Health Insurance removed", data: aClinicHistory });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 export { sanitizeClinicHistoryInput, findAll, findOne, add, update, remove };
