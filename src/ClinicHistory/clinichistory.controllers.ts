@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from 'express'
-import { ClinicHistoryRepository } from './clinichistory.repository.js'
 import { ClinicHistory } from './clinichistory.entity.js'
+import { orm } from "../shared/db/orm.js";
 
-const repository = new ClinicHistoryRepository()
+const em = orm.em
+em.getRepository(ClinicHistory)
+
 
 function sanitizeClinicHistoryInput(req: Request, res: Response, next: NextFunction){
 
     req.body.sanitizedInput = {
-        nro: req.body.nro,
+        id: req.body.id,
         bloodType: req.body.bloodType,
         personalHistory: req.body.personalHistory,
         familyBackground: req.body.familyBackground,
@@ -24,53 +26,62 @@ function sanitizeClinicHistoryInput(req: Request, res: Response, next: NextFunct
     next()
 }
 
-function findAll(req:Request, res:Response)  {
-    res.json({data: repository.findAll()})
-}
-function findOne(req:Request, res:Response) {
-    const aClinicHistory = repository.findOne({nro: Number(req.params.nro)})
-    if(!aClinicHistory){
-        return res.status(404).send({message: 'Clinic History not found'})
+async function findAll(req: Request, res: Response) {
+    try{
+        const ClinicHistorys = await em.find(ClinicHistory, {})
+        res.status(200).json({message: "Found all Clinic Historys", data: ClinicHistorys})
     }
-    res.json(aClinicHistory)
+    catch(error: any){
+        res.status(500).json({message: error.message})
+    }
 }
 
-
-
-function add( req:Request, res:Response)  {
-    const input = req.body.sanitizedInput
-  
-    const aNewClinicHistoryInput = new ClinicHistory( 
-        input.nro, 
-        input.bloodType, 
-        input.personalHistory, 
-        input.familyBackground 
-    )
-  
-    const aNewClinicHistory = repository.add(aNewClinicHistoryInput)
-    res.status(201).send({message: 'Clinic History created succesfully', data: aNewClinicHistory})
+async function findOne(req: Request, res: Response) {
+    try{
+        const id = Number.parseInt(req.params.id)
+        const aClinicHistory = await em.findOneOrFail(ClinicHistory, {id})
+        
+        res.status(200).json({message: "Clinic History Found", data: aClinicHistory})
+    }
+    catch(error: any){
+        res.status(500).json({message: error.message})
+    }
 }
-  
-  
-function update(req:Request, res:Response) {
-    req.body.sanitizedInput.nro = req.params.nro
-    const clinicHistory = repository.update(req.body.sanitizedInput)
-  
-    if(!clinicHistory){
-        res.status(404).send({ message: 'Clinic History not found' })
-    }else{
-        res.status(200).send({ message:'Clinic History updated succesfully', data: clinicHistory})
+
+async function add(req: Request, res: Response) {
+    try{
+        const aNewClinicHistory = em.create(ClinicHistory, req.body.sanitizedInput)
+        await em.flush()
+        res.status(201).json({message: "Clinic History created", data: aNewClinicHistory})
+    }
+    catch(error: any){
+        res.status(500).json({message: error.message})
     }
 }
   
-function remove(req:Request, res:Response){
-    const nro = Number(req.params.nro)
-    const clinicHistory = repository.delete({nro})
-  
-    if(!clinicHistory){
-        res.status(404).send({message: 'Clinic History not found'})
-    }else{
-        res.status(200).send({message: 'Clinic History deleted succesfully'})
+async function update(req: Request, res: Response) {
+    try{
+        const id = Number.parseInt(req.params.id)
+        const aClinicHistory =  em.getReference(ClinicHistory, id)
+        em.assign(aClinicHistory, req.body.sanitizedInput)
+        await em.flush()
+        res.status(200).json({message: "Clinic History updated", data: aClinicHistory})
+    }
+    catch(error: any){
+        res.status(500).json({message: error.message})
+    }
+}
+
+async function remove(req: Request, res: Response) {
+    try{
+        const id = Number.parseInt(req.params.id)
+        const aClinicHistory =  em.getReference(ClinicHistory, id)
+        await em.removeAndFlush(aClinicHistory)
+        res.status(200).json({message: "Health Insurance removed", data: aClinicHistory})
+    }
+    catch(error : any){
+        res.status(500).json({message: error.message})
+    
     }
 }
 

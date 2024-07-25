@@ -1,11 +1,20 @@
+import 'reflect-metadata'
 import express, { NextFunction, Request, Response } from 'express'
 import { HealthInsurance } from './HealthInsurance/healthinsurance.entity.js'
 import { medicRouter } from './Medic/medic.routers.js'
 import { ClinicHistory } from './ClinicHistory/clinichistory.entity.js'
 import { clinicHistoryRouter } from './ClinicHistory/clinichistory.routers.js'
+import { orm, syncSchema } from './shared/db/orm.js'
+import { RequestContext } from '@mikro-orm/core'
+
 const app = express()
 
 app.use(express.json())
+
+app.use(req, res, next) => {
+    RequestContext.create(orm.em, next)
+}
+
 
 const HealthInsurances = [
     new HealthInsurance(
@@ -13,9 +22,6 @@ const HealthInsurances = [
         ,1
     ),
 ]
-
-
-
 
 //rutas de obras sociales
 
@@ -205,6 +211,8 @@ app.use((_, res) => {
     return res.status(404).send({ message: 'Resource not found' })
   })
   
+
+await syncSchema()
 
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000/")
