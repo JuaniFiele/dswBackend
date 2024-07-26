@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from "express";
-import { HealthInsurance } from "./healthinsurance.entity.js";
+import { ClinicHistory } from "./clinicHistory.entity.js";
 import { orm } from "../shared/orm.js";
 
 const em = orm.em
-em.getRepository(HealthInsurance)
+em.getRepository(ClinicHistory)
 
 
-function sanitizeHealthInsuranceInput(req: Request, res: Response, next: NextFunction){
+function sanitizeClinicHistoryInput(req: Request, res: Response, next: NextFunction){
 
     req.body.sanitizedInput = {
-        name: req.body.name,
-        code: req.body.code
-        
+        grupoSanguineo: req.body.grupoSanguineo,
+        antecedentesPersonales: req.body.antecedentesPersonales,
+        antecedentesFamiliares: req.body.antecedentesFamiliares
     } 
 
     //validar info traida (validar info maliciosa, tipo de dato, etc...)
@@ -28,8 +28,8 @@ function sanitizeHealthInsuranceInput(req: Request, res: Response, next: NextFun
 
 async function findAll(req: Request, res: Response) {
     try{
-        const healthInsurances = await em.find(HealthInsurance, {})
-        res.status(200).json({message: "Found all HealthInsurances", data: healthInsurances})
+        const clinicHistorys = await em.find(ClinicHistory, {})
+        res.status(200).json({message: "Found all HealthInsurances", data: clinicHistorys})
     }
     catch(error: any){
         res.status(500).json({message: error.message})
@@ -39,9 +39,9 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
     try{
         const id = Number.parseInt(req.params.id)
-        const aHealthInsurance = await em.findOneOrFail(HealthInsurance, {id})
+        const aClinicHistory = await em.findOneOrFail(ClinicHistory, {id})
         
-        res.status(200).json({message: "Health Insurance Found", data: aHealthInsurance})
+        res.status(200).json({message: "Health Insurance Found", data: aClinicHistory})
     }
     catch(error: any){
         res.status(500).json({message: error.message})
@@ -50,9 +50,9 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
     try{
-        const aNewHealthInsurance = em.create(HealthInsurance, req.body.sanitizedInput)
+        const aNewClinicHistory = em.create(ClinicHistory, req.body.sanitizedInput)
         await em.flush()
-        res.status(201).json({message: "Patient created", data: aNewHealthInsurance})
+        res.status(201).json({message: "Patient created", data: aNewClinicHistory})
     }
     catch(error: any){
         res.status(500).json({message: error.message, data: req.body})
@@ -62,10 +62,10 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try{
         const id = Number.parseInt(req.params.id)
-        const aHealthInsurance =  em.getReference(HealthInsurance, id)
-        em.assign(aHealthInsurance, req.body.sanitizedInput)
+        const aClinicHistory =  em.getReference(ClinicHistory, id)
+        em.assign(aClinicHistory, req.body.sanitizedInput)
         await em.flush()
-        res.status(200).json({message: "Health Insurance updated", data: aHealthInsurance})
+        res.status(200).json({message: "Health Insurance updated", data: aClinicHistory})
     }
     catch(error: any){
         res.status(500).json({message: error.message})
@@ -75,9 +75,9 @@ async function update(req: Request, res: Response) {
 async function remove(req: Request, res: Response) {
     try{
         const id = Number.parseInt(req.params.id)
-        const aHealthInsurance =  em.getReference(HealthInsurance, id)
-        await em.removeAndFlush(aHealthInsurance)
-        res.status(200).json({message: "Health Insurance removed", data: aHealthInsurance})
+        const aClinicHistory =  em.getReference(ClinicHistory, id)
+        await em.removeAndFlush(aClinicHistory)
+        res.status(200).json({message: "Health Insurance removed", data: aClinicHistory})
     }
     catch(error : any){
         res.status(500).json({message: error.message})
@@ -85,4 +85,4 @@ async function remove(req: Request, res: Response) {
     }
 }
 
-export {sanitizeHealthInsuranceInput, findAll, findOne, add, update, remove}
+export {sanitizeClinicHistoryInput, findAll, findOne, add, update, remove}

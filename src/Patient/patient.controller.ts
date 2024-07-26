@@ -33,7 +33,7 @@ async function add(req: Request, res: Response) {
         res.status(201).json({message: "Patient created", data: aNewPatient})
     }
     catch(error: any){
-        res.status(500).json({message: error.message})
+        res.status(500).json({message: error.message, data: req.body})
     }
 }
 

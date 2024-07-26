@@ -3,15 +3,15 @@
 GET http://localhost:3000/api/HealthInsurances
 
 ###OBTENER UNA OBRA SOCIAL
-GET http://localhost:3000/api/HealthInsurances/1
+GET http://localhost:3000/api/HealthInsurances/2
 
 ###crear una nueva obra social
 POST http://localhost:3000/api/HealthInsurances
 Content-Type: application/json
 
 {
-    "name": "Swiss Medical",
-    "code": 2
+    "name": "OSDE",
+    "Patients": []
 }
 
 ### MODIFICAREMOS UNA OBRA SOCIAL 
@@ -20,14 +20,14 @@ Content-Type: application/json
 
 {
     "name": "PAMI",
-    "code": req.params.code
+    "Patients": []
 }
 ### MODIFICAR OBRA SOCIAL (PATCH - recurso parcial)
 PATCH http://localhost:3000/api/HealthInsurances/1
 Content-Type: application/json
 
 {
-  "name": "PAMI"
+  "name": "PAMII"
 }
 ### BORRAR UNA OBRA SOCIAL
-DELETE http://localhost:3000/api/HealthInsurances/1
+DELETE http://localhost:3000/api/HealthInsurances/12
