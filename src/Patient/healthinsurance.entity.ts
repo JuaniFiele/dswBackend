@@ -10,7 +10,7 @@ export class HealthInsurance extends BaseEntity {
     name!: string
     
     
-    @OneToMany(() => Patient, patient => patient.healthInsurance, {cascade: [Cascade.ALL]})
+    @OneToMany(() => Patient, patient => patient.healthInsurance, {cascade: [Cascade.ALL], nullable: true})
     patients = new Collection<Patient>(this)
     
 }

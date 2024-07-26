@@ -52,7 +52,7 @@ async function add(req: Request, res: Response) {
     try{
         const aNewHealthInsurance = em.create(HealthInsurance, req.body.sanitizedInput)
         await em.flush()
-        res.status(201).json({message: "Patient created", data: aNewHealthInsurance})
+        res.status(201).json({message: "HealthInsurance created", data: aNewHealthInsurance})
     }
     catch(error: any){
         res.status(500).json({message: error.message, data: req.body})

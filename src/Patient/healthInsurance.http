@@ -2,32 +2,35 @@
 ###OBTENER TODAS LAS OBRAS SOCIALES
 GET http://localhost:3000/api/HealthInsurances
 
-###OBTENER UNA OBRA SOCIAL
-GET http://localhost:3000/api/HealthInsurances/2
-
 ###crear una nueva obra social
+# @name createHealthInsurance
 POST http://localhost:3000/api/HealthInsurances
 Content-Type: application/json
 
 {
-    "name": "OSDE",
-    "Patients": []
+    "name": "Sancor"
 }
 
+### OBTENER ID
+@id = {{createHealthInsurance.response.body.data.id}}
+
+###OBTENER UNA OBRA SOCIAL
+GET http://localhost:3000/api/HealthInsurances/{{id}}
+
+
 ### MODIFICAREMOS UNA OBRA SOCIAL 
-PUT http://localhost:3000/api/HealthInsurances/1
+PUT http://localhost:3000/api/HealthInsurances/{{id}}
 Content-Type: application/json
 
 {
-    "name": "PAMI",
-    "Patients": []
+    "name": "PAMI"
 }
 ### MODIFICAR OBRA SOCIAL (PATCH - recurso parcial)
-PATCH http://localhost:3000/api/HealthInsurances/1
+PATCH http://localhost:3000/api/HealthInsurances/{{id}}
 Content-Type: application/json
 
 {
   "name": "PAMII"
 }
 ### BORRAR UNA OBRA SOCIAL
-DELETE http://localhost:3000/api/HealthInsurances/12
+DELETE http://localhost:3000/api/HealthInsurances/{{id}}

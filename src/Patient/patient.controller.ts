@@ -18,7 +18,7 @@ async function findAll(req: Request, res: Response) {
 async function findOne(req: Request, res: Response) {
     try{
         const id = Number.parseInt(req.params.id)
-        const aPatient = await em.findOneOrFail(Patient, {id}, {populate: ['healthInsurance']})
+        const aPatient = await em.findOneOrFail(Patient, {id}, {populate: ["healthInsurance"]})
         res.status(200).json({message: "Character Found", data: aPatient})
     }
     catch(error: any){
@@ -55,6 +55,7 @@ async function remove(req: Request, res: Response) {
         const id = Number.parseInt(req.params.id)
         const aPatient = await em.findOneOrFail(Patient, {id})
         await em.removeAndFlush(aPatient)
+        res.status(200).json({message: "Patient deleted", data: aPatient})
     }
     catch(error : any){
         res.status(500).json({message: error.message})
