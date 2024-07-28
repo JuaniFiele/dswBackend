@@ -1,0 +1,34 @@
+
+###OBTENER TODAS LAS HISTORIAS CLINICAS
+GET http://localhost:3000/api/ClinicHistorys
+
+###OBTENER UNA HISTORIA CLINICA
+GET http://localhost:3000/api/ClinicHistorys/1
+
+###CREAR UNA NUEVA HISTORIA CLINICA
+POST http://localhost:3000/api/ClinicHistorys
+Content-Type: application/json
+
+{
+    "grupoSanguineo": "A+",
+    "antecedentesPersonales": "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: No fumador, Consumo de alcohol moderado (1-2 copas de vino por semana), Ejercicio físico regular (3 veces por semana). Medicación Actual: Losartán 50 mg una vez al día.",
+    "antecedentesFamiliares": "Padre: Edad: 70 años. Enfermedades: Hipertensión arterial, infarto al miocardio a los 68 años. Madre: Edad: 68 años. Enfermedades: Diabetes tipo 2 diagnosticada a los 60 años, hipotiroidismo. Hermano Mayor: Edad: 48 años. Enfermedades: Ninguna conocida. Hermana Menor: Edad: 42 años. Enfermedades: Asma desde la infancia. Abuelos Paternos: Abuelo: Fallecido a los 75 años por complicaciones de un derrame cerebral, tenía hipertensión. Abuela: Fallecida a los 72 años por cáncer de mama. Abuelos Maternos: Abuelo: Fallecido a los 80 años por causas naturales, tenía diabetes tipo 2. Abuela: Fallecida a los 78 años por enfermedad pulmonar obstructiva crónica (EPOC).",
+    "patient": [1]
+}
+
+### MODIFICAREMOS UNA HISTORIA CLINICA 
+PUT http://localhost:3000/api/ClinicHistorys/1
+Content-Type: application/json
+
+{
+    "antecedentesPersonales": "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: Fumador, No hace ejercicio fisico",
+}
+### MODIFICAR HISTORIA CLINICA (PATCH - recurso parcial)
+PATCH http://localhost:3000/api/ClinicHistorys/1
+Content-Type: application/json
+
+{
+    "antecedentesPersonales": "Enfermedades Crónicas: Hipertensión arterial diagnosticada a los 40 años. Cirugías: Apendicectomía a los 25 años. Alergias: Alergia a la penicilina. Hábitos: Fumador, No hace ejercicio fisico",
+}
+### BORRAR UNA HISTORIA CLINICA
+DELETE http://localhost:3000/api/ClinicHistorys/1

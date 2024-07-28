@@ -1,0 +1,52 @@
+
+###OBTENER TODOS LOS PACIENTES
+GET http://localhost:3000/api/Patients
+
+###crear un paciente
+# @name createPatient
+POST http://localhost:3000/api/Patients
+Content-Type: application/json
+
+{
+    "firstname": "Michael",
+    "lastname": "Jorda",
+    "dni": "12345679",
+    "phoneNumber": "1684513153",
+    "email": "john@john.com",
+    "address": "Calle Falsa 123",
+    "birthDate": "1990-01-01",
+    "healthInsurance": [15]
+}
+
+### OBTENER ID
+@id = {{createPatient.response.body.data.id}}
+
+###OBTENER UN patient
+GET http://localhost:3000/api/Patients/{{id}}
+
+
+### MODIFICAREMOS UN PACIENTE (PUT - recurso completo) 
+PUT http://localhost:3000/api/Patients/{{id}}
+Content-Type: application/json
+
+{
+    "firstname": "Kobe",
+    "lastname": "Bryant",
+    "dni": "12345679",
+    "phoneNumber": "1684513154",
+    "email": "kobe@kobe.com",
+    "address": "Calle Falsa 124",
+    "birthDate": "1999-01-01",
+    "HealthInsurance": [1]
+}
+### MODIFICAR PACIENTE (PATCH - recurso parcial)
+PATCH http://localhost:3000/api/Patients/{{id}}
+Content-Type: application/json
+
+{
+   "firstname": "LeBron",
+    "lastname": "James"
+}
+
+### BORRAR UN PACIENTE
+DELETE http://localhost:3000/api/Patients/{{id}}
