@@ -1,0 +1,43 @@
+###OBTENER TODOS LOS HORARIOS
+GET http://localhost:3000/api/Schedules
+
+###crear un paciente
+# @name createSchedule
+POST http://localhost:3000/api/Schedules
+Content-Type: application/json
+
+{
+    "dia": "Lunes",
+    "horaInicio": "060000",
+    "horaFin": "190000",
+    "dni": [1]
+}
+
+### OBTENER ID
+@id = {{createSchedule.response.body.data.id}}
+
+###OBTENER UN HORARIO
+GET http://localhost:3000/api/Schedules/{{id}}
+
+
+### MODIFICAREMOS UN HORARIO (PUT - recurso completo) 
+PUT http://localhost:3000/api/Schedules/{{id}}
+Content-Type: application/json
+
+{
+    "dia": "Martes",
+    "horaInicio": "060000",
+    "horaFin": "190000",
+    "dni": [1]
+}
+### MODIFICAR HORARIO (PATCH - recurso parcial)
+PATCH http://localhost:3000/api/Schedules/{{id}}
+Content-Type: application/json
+
+{
+   "dia": "Miercoles",
+    "horaInicio": "070000"
+}
+
+### BORRAR UN HORARIO
+DELETE http://localhost:3000/api/Schedules/{{id}}
