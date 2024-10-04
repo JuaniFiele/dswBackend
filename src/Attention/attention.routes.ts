@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {findAll, findOne, add , update, remove} from "./attention.controller.js";
+import { findAll, findOne, add, update, remove} from "./attention.controller.js";
 
 export const AttentionRoutes = Router()
 

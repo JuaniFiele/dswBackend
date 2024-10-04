@@ -31,7 +31,7 @@ export class Medic extends BaseEntity {
     license!: number
 
     @ManyToOne(() => Specialty, { nullable: true })
-        specialty!: Rel<Specialty>
+        specialty?: Rel<Specialty>
         
     @OneToMany(() => ConsultationHours, (consultationHours: ConsultationHours) => consultationHours.medic,{cascade: [Cascade.ALL], nullable: true})
     consultationHours = new Collection<ConsultationHours>(this)

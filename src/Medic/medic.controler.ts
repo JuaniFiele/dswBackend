@@ -7,7 +7,7 @@ em.getRepository(Medic)
 
 async function findAll(req: Request, res: Response) {
     try {
-        const medics = await em.find(Medic, {})
+        const medics = await em.find(Medic, {}, { populate: ['specialty'] })
         res.json({ data: medics })
     }
     catch (error: any) {

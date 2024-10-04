@@ -8,7 +8,7 @@ POST http://localhost:3000/api/Medics
 Content-Type: application/json
 
 {
-    "dni": "123451",
+    "dni": "12345123",
     "dniType": "DNI",
     "firstname": "Jane",
     "lastname": "Doe",
@@ -16,7 +16,7 @@ Content-Type: application/json
     "password": "123456",
     "medicalConsultationValue": 10,
     "specialty": [1],
-    "license": 258413213
+    "license": 25841
 }
 
 ### ID obtenido de la respuesta de creación
@@ -50,4 +50,4 @@ Content-Type: application/json
 }
 
 ### BORRAR UN MEDICO
-DELETE http://localhost:3000/api/Medics/{{id}}
+DELETE http://localhost:3000/api/Medics/12
