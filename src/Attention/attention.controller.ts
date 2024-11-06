@@ -15,6 +15,19 @@ async function findAll(req: Request, res: Response) {
     }
 }
 
+async function findAllByDni(req: Request, res: Response) {
+    const { dni } = req.params; // Suponiendo que el DNI se pasa como parámetro en la URL
+
+    try {
+        const attentions = await em.find(Attention, { patient: { dni } }, { populate: ['patient'] });
+        res.status(200).json({ message: "Found all Attentions for patient", data: attentions });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+
 async function findOne(req: Request, res: Response) {
     try{
         const id = Number.parseInt(req.params.id)
@@ -63,4 +76,4 @@ async function remove(req: Request, res: Response) {
     }
 }
 
-export {findAll, findOne, add, update, remove}
+export { findAll, findOne, add, update, remove, findAllByDni }
