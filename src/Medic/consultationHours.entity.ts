@@ -12,7 +12,8 @@ export class ConsultationHours extends BaseEntity {
     startTime!: string
     @Property({nullable: false, type: 'time'})
     endTime!: string
-    
+    @Property({ default: true })
+    isAvailable = true;
     @ManyToOne(() =>Medic, {nullable: true})
     medic!: Rel<Medic>;
  

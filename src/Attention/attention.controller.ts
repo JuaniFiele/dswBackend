@@ -63,4 +63,47 @@ async function remove(req: Request, res: Response) {
     }
 }
 
-export {findAll, findOne, add, update, remove}
+async function cancelAttention(req: Request, res: Response) {
+    const em = orm.em.fork();
+    await em.begin();
+
+    try {
+        const attention = await em.findOneOrFail(Attention, { 
+            id: Number(req.params.id) 
+        }, { 
+            populate: ['consultationHours'] 
+        });
+
+        if (attention.dateCancelled) {
+            throw new Error("La atención ya fue cancelada");
+        }
+
+        if (attention.consultationHours) {
+            attention.consultationHours.isAvailable = true;
+            em.persist(attention.consultationHours);
+        }
+
+        attention.dateCancelled = new Date();
+        await em.commit();
+        
+        res.status(200).json({ 
+            success: true,
+            data: attention 
+        });
+
+    } catch (error: unknown) {
+        await em.rollback();
+        
+        // Verificar si es un Error estándar
+        const errorMessage = error instanceof Error 
+            ? error.message 
+            : "Error desconocido al cancelar";
+        
+        res.status(500).json({ 
+            success: false,
+            error: errorMessage
+        });
+    }
+}
+
+export {cancelAttention, findAll, findOne, add, update, remove}
