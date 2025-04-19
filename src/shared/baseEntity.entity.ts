@@ -1,16 +1,16 @@
-import { DateTimeType, PrimaryKey, Property } from "@mikro-orm/core"
-
+import { DateTimeType, PrimaryKey, Property } from "@mikro-orm/core";
 
 export abstract class BaseEntity {
-    @PrimaryKey()
-    id?: number
+  @PrimaryKey()
+  id!: number;
 
-    @Property({ type: DateTimeType })
-    createdAt = new Date();
-  
-    @Property({
-      type: DateTimeType,
-      onUpdate: () => new Date(),
-    })
-    updatedAt = new Date();
+  @Property({ type: DateTimeType, defaultRaw: 'CURRENT_TIMESTAMP' })
+  createdAt!: Date;
+
+  @Property({
+    type: DateTimeType,
+    defaultRaw: 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+    onUpdate: () => new Date(),
+  })
+  updatedAt!: Date;
 }
