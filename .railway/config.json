@@ -2,7 +2,9 @@
     "build": {
       "builder": "nixpacks",
       "buildCommand": "pnpm install && pnpm run build",
-      "installCommand": "pnpm install --frozen-lockfile"
+      "installCommand": "pnpm install --frozen-lockfile --shamefully-hoist",
+      "useYarn": false,
+      "usePnpm": true
     },
-    "startCommand": "pnpm start"
+    "startCommand": "node ./dist/app.js"
   }

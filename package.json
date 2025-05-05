@@ -5,9 +5,8 @@
   "type": "module",
   "main": "dist/app.js",
   "scripts": {
-    "build": "tsc -p ./tsconfig.json",
+    "build": "tsc -p ./tsconfig.json && cp -r src/views dist/ || true",
     "start": "node ./dist/app.js",
-    "prestart": "pnpm run build",
     "postinstall": "pnpm run build"
   },
   "author": "",
