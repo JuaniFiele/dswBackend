@@ -1,5 +1,5 @@
 # coverage reports
-coverage
+coverage/
 
 # API keys and secrets
 .env
@@ -11,9 +11,6 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# ignore built ts files
-dist/**/*
-
 # vscode
 .vscode/*
 !.vscode/settings.json
@@ -22,8 +19,12 @@ dist/**/*
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
-## local history for vscode
+# local history for vscode
 .history/
 
-## built vscode extensions
+# built vscode extensions
 *.vsix
+
+# Archivos específicos de dist que SÍ deben ignorarse (opcional)
+dist/*.map
+dist/**/*.test.js

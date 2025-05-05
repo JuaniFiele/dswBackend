@@ -1,6 +1,7 @@
 {
     "build": {
       "builder": "nixpacks",
-      "buildCommand": "pnpm install --frozen-lockfile && pnpm run build"
+      "cleanBeforeBuild": true,
+      "buildCommand": "pnpm install --frozen-lockfile --shamefully-hoist && pnpm run build"
     }
   }
