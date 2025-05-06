@@ -36,9 +36,9 @@ export const orm = await MikroORM.init({
     ],
     
     
-    dbName: 'pruebarailway',
+    dbName: 'railway',
     
-    clientUrl: 'mysql://root:cVGGgGlojduAdhHfxlSosPdIsrXcLeLd@yamanote.proxy.rlwy.net:37434/railway',
+    clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@hopper.proxy.rlwy.net:37821/railway',
     
     /*mysql://root:CtmQoJRVAGigLsWpStXJwfhPhSaCJfGD@nozomi.proxy.rlwy.net:23946/railway
     user: root
