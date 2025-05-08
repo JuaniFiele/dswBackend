@@ -540,7 +540,8 @@ static validateIdParam(req: Request, res: Response, next: NextFunction) {
 
     // Validaciones para Patient (igual que las otras) pero permite actualizar al menos un campo
     static async validateUpdatePatientInput(req: Request, res: Response, next: NextFunction) {
-        const validFields = ['dni', 'firstname', 'lastname', 'phoneNumber', 'address', 'email', 'birthDate', 'healthInsurance'];
+        const validFields = ['dni', 'firstname', 'lastname', 'phoneNumber', 'address', 'email', 'birthDate', 'healthInsurance',
+            'dniType', 'grupoSanguineo', 'antecedentesFamiliares', 'antecedentesPersonales'];
 
         // Validar que al menos un campo válido esté presente
         const hasValidField = validFields.some(field => req.body[field] !== undefined);
@@ -554,6 +555,12 @@ static validateIdParam(req: Request, res: Response, next: NextFunction) {
             if (!emailRegex.test(req.body.email)) {
                 return res.status(400).json({ message: "Formato de email inválido" });
             }
+        }
+
+        // Validar grupo sanguíneo (opcional)
+        const validBloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+        if (req.body.grupoSanguineo && !validBloodGroups.includes(req.body.grupoSanguineo)) {
+            return res.status(400).json({ message: "Grupo sanguíneo inválido" });
         }
 
         // Validar formato de teléfono (ejemplo básico)
