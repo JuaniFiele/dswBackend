@@ -40,9 +40,11 @@ app.use((_, res) => {
   return res.status(404).send({ message: 'Resource not found' })
 })
 
-await syncSchema() //never in production, only for development, when in production, the schema should be permanent
+/*await syncSchema() //never in production, only for development, when in production, the schema should be permanent*/
+
+const PORT = Number(process.env.PORT || 3000)
 
 //activar el servidor
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000/")
+app.listen(PORT,() => {
+  //console.log("Server running on http://localhost:3000/")
 })
