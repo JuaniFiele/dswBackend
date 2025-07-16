@@ -13,7 +13,6 @@ import { AttentionRoutes } from './Attention/attention.routes.js'
 import { UserBaseRouter } from './UserBase/userBase.routes.js'
 
 const app = express()
-
 app.use(express.json())
 
 //Cors
@@ -24,6 +23,10 @@ app.use((req, res, next) => {
 })
 //antes de middlewares de negocio
 
+const mercadopago = require('mercadopago')
+mercadopago.configure({
+  access_token: 'APP_USR-388573148319047-071607-63e29c31d42a6fa6defc04f323bbe505-615075660'
+});
 //TODO: routers PONER EN MINUSCULA Y -
 app.use('/api/medics', MedicRouter)
 app.use('/api/patients', PatientRouter)
@@ -33,6 +36,33 @@ app.use('/api/consultation-hours', ConsultationHoursRouter)
 app.use('/api/attentions', AttentionRoutes)
 app.use('/api/health-insurances', HealthInsuranceRouter)
 app.use('/api/login', UserBaseRouter)
+
+//Ruta para crear preferencia de pago
+app.post('/crear-preferencia', async (req, res) => {
+  try {
+    const { descripcion, precio, cantidad } = req.body;
+    const preference = {
+      items: [
+        {
+          title: descripcion,
+          unit_price: parseFloat(precio),
+          quantity: parseInt(cantidad),
+        },
+      ],
+      back_urls: {
+        success: 'http://localhost:3000/success',
+        failure: 'http://localhost:3000/failure',
+        pending: 'http://localhost:3000/pending',
+      },
+      auto_return: 'approved',
+    };
+    const response = await mercadopago.preferences.create(preference);
+    res.json({ init_point: response.body.init_point });
+  } catch (error) {
+    console.error('Error al crear preferencia:', error);
+    res.status(500).json({ error: 'Error al crear el pago' });
+  }
+});
 
 
 //middleware de errores

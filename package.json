@@ -27,9 +27,11 @@
     "@nestjs/common": "^10.4.8",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
     "express": "4.19.2",
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
+    "mercadopago": "^2.8.0",
     "reflect-metadata": "0.2.2"
   }
 }
