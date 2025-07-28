@@ -38,7 +38,7 @@ export const orm = await MikroORM.init({
     
     dbName: 'railway',
     
-    clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@mysql.railway.internal:3306/railway',
+    clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@hopper.proxy.rlwy.net:37821/railway',
     /*host: 'mysql',
     port: parseInt(process.env.MYSQL_PORT || '3306'),
     user: process.env.MYSQL_USER,
