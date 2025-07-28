@@ -36,10 +36,10 @@ export const orm = await MikroORM.init({
     ],
     
     
-    //dbName: 'railway',
+    dbName: 'railway',
     
-    //clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@hopper.proxy.rlwy.net:37821/railway',
-    host: 'mysql',
+    clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@mysql.railway.internal:3306/railway',
+    /*host: 'mysql',
     port: parseInt(process.env.MYSQL_PORT || '3306'),
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
@@ -51,7 +51,7 @@ export const orm = await MikroORM.init({
           rejectUnauthorized: true, 
         }
       }
-    },
+    },*/
     /*mysql://root:CtmQoJRVAGigLsWpStXJwfhPhSaCJfGD@nozomi.proxy.rlwy.net:23946/railway
     user: root
     password: CtmQoJRVAGigLsWpStXJwfhPhSaCJfGD
