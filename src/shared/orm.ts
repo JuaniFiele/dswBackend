@@ -36,10 +36,22 @@ export const orm = await MikroORM.init({
     ],
     
     
-    dbName: 'railway',
+    //dbName: 'railway',
     
-    clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@hopper.proxy.rlwy.net:37821/railway',
-    
+    //clientUrl: 'mysql://root:DxLliqozsxfoMrMGVsGmRQMlFeECdtdN@hopper.proxy.rlwy.net:37821/railway',
+    host: process.env.MYSQL_HOST,
+    port: parseInt(process.env.MYSQL_PORT || '3306'),
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    dbName: process.env.MYSQL_DATABASE,
+
+    driverOptions: {
+      connection: {
+        ssl: {
+          rejectUnauthorized: true, 
+        }
+      }
+    },
     /*mysql://root:CtmQoJRVAGigLsWpStXJwfhPhSaCJfGD@nozomi.proxy.rlwy.net:23946/railway
     user: root
     password: CtmQoJRVAGigLsWpStXJwfhPhSaCJfGD
