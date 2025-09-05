@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { findAll, findOne, add, update, remove, findOneByDni } from "./patient.controller.js";
+import { findAll, findOne, add, update, remove, findOneByDni, getAttentionsForOneMedic } from "./patient.controller.js";
 import validateRole from "../shared/validateRole.js";
 
 export const PatientRouter = Router()
@@ -7,14 +7,16 @@ export const PatientRouter = Router()
 PatientRouter.get('/', findAll)
 // PatientRouter.get('/:Id/attentions', findAttentionsByID) 
 
-PatientRouter.get('/:id',validateRole('secretary'), findOne)
+PatientRouter.get('/:id', findOne)
 
-PatientRouter.get('/dni/:dni',validateRole('both'), findOneByDni)
+PatientRouter.get('/dni/:dni', findOneByDni)
 
-PatientRouter.post('/',validateRole('both'), add)
+PatientRouter.get('/:patientId/attentions', getAttentionsForOneMedic)
 
-PatientRouter.put('/:id',validateRole('both'), update)
+PatientRouter.post('/', add)
 
-PatientRouter.patch('/:id',validateRole('both'), update)
+PatientRouter.put('/:id', update)
 
-PatientRouter.delete('/:id',validateRole('secretary'), remove)
+PatientRouter.patch('/:id', update)
+
+PatientRouter.delete('/:id', remove)
